@@ -31,21 +31,29 @@ class TranslationScreen extends StatefulWidget {
 }
 
 class _TranslationScreenState extends State<TranslationScreen> {
+  final TextEditingController _textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: const Column(
+        body: Column(
           children: [
             TextField(
-              decoration: InputDecoration(
-                labelText: 'Enter text',
+              controller: _textEditingController,
+              decoration: const InputDecoration(
+                labelText: 'Type the text to translate',
                 border: OutlineInputBorder(),
               ),
             ),
-            Text(
+            ElevatedButton(
+                onPressed: () {
+                  print(_textEditingController.text);
+                },
+                child: const Text("Translate")),
+            const Text(
               'Hello, Polylingo!',
               style: TextStyle(fontSize: 24),
             ),
