@@ -29,12 +29,22 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: const Center(
-        child: Text('Hello World'),
-      ),
-    );
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        body: const Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Enter text',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            Text(
+              'Hello, Polylingo!',
+              style: TextStyle(fontSize: 24),
+            ),
+          ],
+        ));
   }
 }
