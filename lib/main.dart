@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -55,7 +57,11 @@ class _TranslationScreenState extends State<TranslationScreen> {
             ElevatedButton(
                 onPressed: () async {
                   final apiKey = dotenv.env['TRANSLATION_API_KEY'];
-                  final response = await http.get(Uri.parse(apiKey!));
+                  final response = await http.post(Uri.parse(apiKey!),
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: jsonEncode({'text': _textEditingController.text}));
                   setState(() {
                     translationResult = response.body;
                   });
