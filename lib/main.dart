@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future main() async {
@@ -18,13 +19,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const TranslationScreen(title: 'Polylingo'),
+      home: TranslationScreen(title: 'Polylingo'),
     );
   }
 }
 
 class TranslationScreen extends StatefulWidget {
-  const TranslationScreen({super.key, required this.title});
+  TranslationScreen({super.key, required this.title});
 
   final String title;
 
@@ -34,6 +35,7 @@ class TranslationScreen extends StatefulWidget {
 
 class _TranslationScreenState extends State<TranslationScreen> {
   final TextEditingController _textEditingController = TextEditingController();
+  String translationResult = '';
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +53,17 @@ class _TranslationScreenState extends State<TranslationScreen> {
               ),
             ),
             ElevatedButton(
-                onPressed: () {
-                  print(_textEditingController.text);
-                  print(dotenv.env['TRANSLATION_API_KEY']);
+                onPressed: () async {
+                  final apiKey = dotenv.env['TRANSLATION_API_KEY'];
+                  final response = await http.get(Uri.parse(apiKey!));
+                  setState(() {
+                    translationResult = response.body;
+                  });
                 },
                 child: const Text("Translate")),
-            const Text(
-              'Hello, Polylingo!',
-              style: TextStyle(fontSize: 24),
+            Text(
+              translationResult,
+              style: const TextStyle(fontSize: 24),
             ),
           ],
         ));
