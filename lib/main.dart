@@ -16,21 +16,26 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Polylingo'),
+      home: const TranslationScreen(title: 'Polylingo'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+class TranslationScreen extends StatefulWidget {
+  const TranslationScreen({super.key, required this.title});
 
   final String title;
 
   @override
+  State<TranslationScreen> createState() => _TranslationScreenState();
+}
+
+class _TranslationScreenState extends State<TranslationScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(widget.title),
         ),
         body: const Column(
           children: [
