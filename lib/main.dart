@@ -142,6 +142,13 @@ class _TranslationScreenState extends State<TranslationScreen> {
                   style: const TextStyle(fontSize: 16),
                 ),
               ),
+            const SizedBox(height: 20),
+            if (translationResult.isNotEmpty)
+              ActionChip(
+                  label: const Text("Explanation"),
+                  onPressed: () {
+                    print("Explanation button pressed");
+                  }),
           ],
         ),
       ),
