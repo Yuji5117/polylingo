@@ -37,6 +37,17 @@ class TranslationScreen extends StatefulWidget {
 
 class _TranslationScreenState extends State<TranslationScreen> {
   final TextEditingController _textEditingController = TextEditingController();
+  final List<String> languages = [
+    'English',
+    'Spanish',
+    'French',
+    'German',
+    'Japanese',
+    'Chinese',
+    'Korean',
+  ];
+
+  String selectedLanguage = 'English';
   String translationResult = '';
 
   Future<void> _translateText() async {
@@ -45,7 +56,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: jsonEncode({'text': _textEditingController.text}));
+        body: jsonEncode({
+          'text': _textEditingController.text,
+          'language': selectedLanguage
+        }));
     setState(() {
       translationResult = response.body;
     });
@@ -63,6 +77,29 @@ class _TranslationScreenState extends State<TranslationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: DropdownButton<String>(
+                      value: selectedLanguage,
+                      items: languages.map((String language) {
+                        return DropdownMenuItem<String>(
+                            value: language, child: Text(language));
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedLanguage = newValue!;
+                        });
+                      })),
+            ),
+            // 言語選択のドロップダウンメニュー
+            const SizedBox(height: 15),
             TextField(
               controller: _textEditingController,
               decoration: InputDecoration(
