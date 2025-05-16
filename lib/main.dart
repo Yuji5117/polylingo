@@ -21,13 +21,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: TranslationScreen(title: 'Polylingo'),
+      home: const TranslationScreen(title: 'Polylingo'),
     );
   }
 }
 
 class TranslationScreen extends StatefulWidget {
-  TranslationScreen({super.key, required this.title});
+  const TranslationScreen({super.key, required this.title});
 
   final String title;
 
@@ -39,39 +39,74 @@ class _TranslationScreenState extends State<TranslationScreen> {
   final TextEditingController _textEditingController = TextEditingController();
   String translationResult = '';
 
+  Future<void> _translateText() async {
+    final apiKey = dotenv.env['TRANSLATION_API_KEY'];
+    final response = await http.post(Uri.parse(apiKey!),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({'text': _textEditingController.text}));
+    setState(() {
+      translationResult = response.body;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Column(
+      backgroundColor: const Color(0xFFF9F5FF),
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
               controller: _textEditingController,
-              decoration: const InputDecoration(
-                labelText: 'Type the text to translate',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                hintText: 'Type the text to translate',
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
             ),
-            ElevatedButton(
-                onPressed: () async {
-                  final apiKey = dotenv.env['TRANSLATION_API_KEY'];
-                  final response = await http.post(Uri.parse(apiKey!),
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                      body: jsonEncode({'text': _textEditingController.text}));
-                  setState(() {
-                    translationResult = response.body;
-                  });
-                },
-                child: const Text("Translate")),
-            Text(
-              translationResult,
-              style: const TextStyle(fontSize: 24),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.lightBlueAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
+                icon: const Icon(Icons.language),
+                label: const Text('Translate'),
+                onPressed: _translateText,
+              ),
             ),
+            const SizedBox(height: 30),
+            if (translationResult.isNotEmpty)
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  translationResult,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
