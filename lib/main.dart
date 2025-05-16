@@ -102,6 +102,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
             const SizedBox(height: 15),
             TextField(
               controller: _textEditingController,
+              maxLines: null,
               decoration: InputDecoration(
                 hintText: 'Type the text to translate',
                 filled: true,
