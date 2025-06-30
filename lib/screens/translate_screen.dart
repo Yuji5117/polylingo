@@ -80,6 +80,14 @@ class _TranslationScreenState extends State<TranslationScreen> {
     });
   }
 
+  void _swapLanguages() {
+    setState(() {
+      final temp = fromSelectedLanguage;
+      fromSelectedLanguage = toSelectedLanguage;
+      toSelectedLanguage = temp;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +111,9 @@ class _TranslationScreenState extends State<TranslationScreen> {
                         onChanged: _onFromLanguageChanged),
                   ),
                   const SizedBox(width: 16),
-                  const Icon(Icons.arrow_forward),
+                  IconButton(
+                      onPressed: _swapLanguages,
+                      icon: const Icon(Icons.swap_horiz)),
                   const SizedBox(width: 16),
                   Expanded(
                     child: LanguageDropdown(
