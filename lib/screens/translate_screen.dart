@@ -26,7 +26,8 @@ class _TranslationScreenState extends State<TranslationScreen> {
     'Korean',
   ];
 
-  String selectedLanguage = 'English';
+  String fromSelectedLanguage = 'Japanese';
+  String toSelectedLanguage = 'English';
   String translationResult = '';
   String explanationResult = '';
 
@@ -38,7 +39,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
         },
         body: jsonEncode({
           'text': _textEditingController.text,
-          'language': selectedLanguage,
+          'language': toSelectedLanguage,
           'contentType': 'translation',
         }));
     setState(() {
@@ -54,7 +55,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
         },
         body: jsonEncode({
           'text': translationResult,
-          'language': selectedLanguage,
+          'language': fromSelectedLanguage,
           'contentType': 'explanation',
         }));
 
@@ -63,11 +64,19 @@ class _TranslationScreenState extends State<TranslationScreen> {
     });
   }
 
-  void _onLanguageChanged(String? newValue) {
+  void _onFromLanguageChanged(String? newValue) {
     if (newValue == null) return;
 
     setState(() {
-      selectedLanguage = newValue;
+      fromSelectedLanguage = newValue;
+    });
+  }
+
+  void _onToLanguageChanged(String? newValue) {
+    if (newValue == null) return;
+
+    setState(() {
+      toSelectedLanguage = newValue;
     });
   }
 
@@ -84,10 +93,26 @@ class _TranslationScreenState extends State<TranslationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              LanguageDropdown(
-                  languages: languages,
-                  selectedLanguage: selectedLanguage,
-                  onChanged: _onLanguageChanged),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: LanguageDropdown(
+                        languages: languages,
+                        selectedLanguage: fromSelectedLanguage,
+                        onChanged: _onFromLanguageChanged),
+                  ),
+                  const SizedBox(width: 16),
+                  const Icon(Icons.arrow_forward),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: LanguageDropdown(
+                        languages: languages,
+                        selectedLanguage: toSelectedLanguage,
+                        onChanged: _onToLanguageChanged),
+                  ),
+                ],
+              ),
               const SizedBox(height: 15),
               TextField(
                 controller: _textEditingController,
