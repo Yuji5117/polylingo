@@ -144,17 +144,28 @@ class _TranslationScreenState extends State<TranslationScreen> {
               ),
               const SizedBox(height: 30),
               if (translationResult.isNotEmpty)
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    translationResult,
-                    style: const TextStyle(fontSize: 16),
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Translation',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.blueAccent)),
+                    const SizedBox(height: 8),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        translationResult,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ],
                 ),
               const SizedBox(height: 20),
               if (translationResult.isNotEmpty)
@@ -165,17 +176,28 @@ class _TranslationScreenState extends State<TranslationScreen> {
                     }),
               const SizedBox(height: 20),
               if (explanationResult.isNotEmpty)
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    explanationResult,
-                    style: const TextStyle(fontSize: 16),
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Explanation',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.blueAccent)),
+                    const SizedBox(height: 8),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        explanationResult,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ],
                 ),
             ],
           ),
