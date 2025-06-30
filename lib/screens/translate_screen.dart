@@ -96,7 +96,6 @@ class _TranslationScreenState extends State<TranslationScreen> {
                           });
                         })),
               ),
-              // 言語選択のドロップダウンメニュー
               const SizedBox(height: 15),
               TextField(
                 controller: _textEditingController,
