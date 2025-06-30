@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:polylingo/widgets/language_dropdown.dart';
 
 class TranslationScreen extends StatefulWidget {
   const TranslationScreen({super.key, required this.title});
@@ -62,6 +63,14 @@ class _TranslationScreenState extends State<TranslationScreen> {
     });
   }
 
+  void _onLanguageChanged(String? newValue) {
+    if (newValue == null) return;
+
+    setState(() {
+      selectedLanguage = newValue;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,27 +84,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: DropdownButton<String>(
-                        value: selectedLanguage,
-                        items: languages.map((String language) {
-                          return DropdownMenuItem<String>(
-                              value: language, child: Text(language));
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedLanguage = newValue!;
-                          });
-                        })),
-              ),
+              LanguageDropdown(
+                  languages: languages,
+                  selectedLanguage: selectedLanguage,
+                  onChanged: _onLanguageChanged),
               const SizedBox(height: 15),
               TextField(
                 controller: _textEditingController,
