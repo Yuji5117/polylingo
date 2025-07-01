@@ -39,11 +39,14 @@ class _TranslationScreenState extends State<TranslationScreen> {
         },
         body: jsonEncode({
           'text': _textEditingController.text,
-          'language': toSelectedLanguage,
+          'to': toSelectedLanguage,
           'contentType': 'translation',
         }));
+
+    final Map<String, dynamic> decodedResponse = jsonDecode(response.body);
+
     setState(() {
-      translationResult = response.body;
+      translationResult = decodedResponse['translated'];
     });
   }
 
