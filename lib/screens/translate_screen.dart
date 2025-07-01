@@ -33,7 +33,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
 
   Future<void> _translateText() async {
     final apiKey = dotenv.env['TRANSLATION_API_KEY'];
-    final response = await http.post(Uri.parse(apiKey!),
+    final response = await http.post(Uri.parse('$apiKey/translate'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -52,18 +52,20 @@ class _TranslationScreenState extends State<TranslationScreen> {
 
   Future<void> _explainText(String translationResult) async {
     final apiKey = dotenv.env['TRANSLATION_API_KEY'];
-    final response = await http.post(Uri.parse(apiKey!),
+    final response = await http.post(Uri.parse('$apiKey/translate/explain'),
         headers: {
           'Content-Type': 'application/json',
         },
         body: jsonEncode({
           'text': translationResult,
-          'language': fromSelectedLanguage,
+          'from': fromSelectedLanguage,
           'contentType': 'explanation',
         }));
 
+    final Map<String, dynamic> decodedResponse = jsonDecode(response.body);
+
     setState(() {
-      explanationResult = response.body;
+      explanationResult = decodedResponse['explanation'];
     });
   }
 
