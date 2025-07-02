@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:polylingo/widgets/language_dropdown.dart';
+import 'package:polylingo/widgets/translation_section.dart';
 
 class TranslationScreen extends StatefulWidget {
   const TranslationScreen({super.key, required this.title});
@@ -44,9 +45,10 @@ class _TranslationScreenState extends State<TranslationScreen> {
         }));
 
     final Map<String, dynamic> decodedResponse = jsonDecode(response.body);
+    print(decodedResponse);
 
     setState(() {
-      translationResult = decodedResponse['translated'];
+      translationResult = decodedResponse['data']['translated'];
     });
   }
 
@@ -65,7 +67,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
     final Map<String, dynamic> decodedResponse = jsonDecode(response.body);
 
     setState(() {
-      explanationResult = decodedResponse['explanation'];
+      explanationResult = decodedResponse['data']['explanation'];
     });
   }
 
@@ -159,29 +161,7 @@ class _TranslationScreenState extends State<TranslationScreen> {
               ),
               const SizedBox(height: 30),
               if (translationResult.isNotEmpty)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Translation',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.blueAccent)),
-                    const SizedBox(height: 8),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        translationResult,
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ],
-                ),
+                TranslationSection(translationResult: translationResult),
               const SizedBox(height: 20),
               if (translationResult.isNotEmpty)
                 ActionChip(
