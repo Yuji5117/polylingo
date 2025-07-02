@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:polylingo/widgets/explanation_section.dart';
 import 'package:polylingo/widgets/language_dropdown.dart';
+import 'package:polylingo/widgets/language_selection_row.dart';
 import 'package:polylingo/widgets/translation_button.dart';
 import 'package:polylingo/widgets/translation_input_field.dart';
 import 'package:polylingo/widgets/translation_section.dart';
@@ -110,28 +111,13 @@ class _TranslationScreenState extends State<TranslationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: LanguageDropdown(
-                        languages: languages,
-                        selectedLanguage: fromSelectedLanguage,
-                        onChanged: _onFromLanguageChanged),
-                  ),
-                  const SizedBox(width: 16),
-                  IconButton(
-                      onPressed: _swapLanguages,
-                      icon: const Icon(Icons.swap_horiz)),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: LanguageDropdown(
-                        languages: languages,
-                        selectedLanguage: toSelectedLanguage,
-                        onChanged: _onToLanguageChanged),
-                  ),
-                ],
-              ),
+              LanguageSelectionRow(
+                  languages: languages,
+                  fromSelectedLanguage: fromSelectedLanguage,
+                  toSelectedLanguage: toSelectedLanguage,
+                  onFromLanguageChanged: _onFromLanguageChanged,
+                  onToLanguageChanged: _onToLanguageChanged,
+                  swapLanguages: _swapLanguages),
               const SizedBox(height: 15),
               TranslationInputField(
                   textEditingController: _textEditingController),
