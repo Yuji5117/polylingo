@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:polylingo/widgets/explanation_section.dart';
 import 'package:polylingo/widgets/language_dropdown.dart';
+import 'package:polylingo/widgets/translation_input_field.dart';
 import 'package:polylingo/widgets/translation_section.dart';
 
 class TranslationScreen extends StatefulWidget {
@@ -131,18 +132,8 @@ class _TranslationScreenState extends State<TranslationScreen> {
                 ],
               ),
               const SizedBox(height: 15),
-              TextField(
-                controller: _textEditingController,
-                maxLines: null,
-                decoration: InputDecoration(
-                  hintText: 'Type the text to translate',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
+              TranslationInputField(
+                  textEditingController: _textEditingController),
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
