@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:polylingo/widgets/explanation_section.dart';
 import 'package:polylingo/widgets/language_dropdown.dart';
+import 'package:polylingo/widgets/translation_button.dart';
 import 'package:polylingo/widgets/translation_input_field.dart';
 import 'package:polylingo/widgets/translation_section.dart';
 
@@ -136,20 +137,9 @@ class _TranslationScreenState extends State<TranslationScreen> {
                   textEditingController: _textEditingController),
               const SizedBox(height: 20),
               SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightBlueAccent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                  icon: const Icon(Icons.language),
-                  label: const Text('Translate'),
-                  onPressed: _translateText,
-                ),
-              ),
+                  width: double.infinity,
+                  height: 50,
+                  child: TranslationButton(onPressed: _translateText)),
               const SizedBox(height: 30),
               if (translationResult.isNotEmpty)
                 TranslationSection(translationResult: translationResult),
