@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:polylingo/widgets/explanation_section.dart';
-import 'package:polylingo/widgets/language_dropdown.dart';
 import 'package:polylingo/widgets/language_selection_row.dart';
 import 'package:polylingo/widgets/translation_button.dart';
 import 'package:polylingo/widgets/translation_input_field.dart';
