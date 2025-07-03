@@ -27,4 +27,27 @@ class TranslateService {
       throw Exception('Failed to translate text: ${response.body}');
     }
   }
+
+  Future<String> explainText(
+      {required String translationResult,
+      required String fromSelectedLanguage}) async {
+    final uri = Uri.parse('$apiKey/translate/explain');
+
+    final response = await http.post(uri,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'text': translationResult,
+          'from': fromSelectedLanguage,
+          'contentType': 'explanation',
+        }));
+
+    if (response.statusCode == 200) {
+      final decodedResponse = jsonDecode(response.body);
+      return decodedResponse['data']['explanation'];
+    } else {
+      throw Exception('Failed to explain text: ${response.body}');
+    }
+  }
 }
