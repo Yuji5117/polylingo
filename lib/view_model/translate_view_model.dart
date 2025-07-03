@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polylingo/models/translation_result.dart';
 import 'package:polylingo/services/translate_service.dart';
 
 class TranslateViewModel extends ChangeNotifier {
@@ -53,9 +54,12 @@ class TranslateViewModel extends ChangeNotifier {
   Future<void> translate() async {
     final inputText = _textEditingController.text;
 
-    _translationResult = await _service.translateText(
+    final json = await _service.translateText(
         text: inputText, toSelectedLanguage: toSelectedLanguage);
 
+    final result = TranslationResult.fromJson(json);
+
+    _translationResult = result.translated;
     notifyListeners();
   }
 

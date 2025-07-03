@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class TranslateService {
   final String? apiKey = dotenv.env['TRANSLATION_API_KEY'];
 
-  Future<String> translateText(
+  Future<Map<String, dynamic>> translateText(
       {required String text, required String toSelectedLanguage}) async {
     final uri = Uri.parse('$apiKey/translate');
 
@@ -21,8 +21,8 @@ class TranslateService {
         }));
 
     if (response.statusCode == 200) {
-      final decodedResponse = jsonDecode(response.body);
-      return decodedResponse['data']['translated'];
+      final Map<String, dynamic> json = jsonDecode(response.body);
+      return json;
     } else {
       throw Exception('Failed to translate text: ${response.body}');
     }
