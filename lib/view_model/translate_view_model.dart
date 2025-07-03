@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polylingo/models/explanation_result.dart';
 import 'package:polylingo/models/translation_result.dart';
 import 'package:polylingo/services/translate_service.dart';
 
@@ -64,10 +65,13 @@ class TranslateViewModel extends ChangeNotifier {
   }
 
   Future<void> explain() async {
-    _explanationResult = await _service.explainText(
+    final json = await _service.explainText(
         translationResult: translationResult,
         fromSelectedLanguage: fromSelectedLanguage);
 
+    final result = ExplanationResult.fromJson(json);
+
+    _explanationResult = result.explanation;
     notifyListeners();
   }
 }

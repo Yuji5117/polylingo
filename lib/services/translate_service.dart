@@ -28,7 +28,7 @@ class TranslateService {
     }
   }
 
-  Future<String> explainText(
+  Future<Map<String, dynamic>> explainText(
       {required String translationResult,
       required String fromSelectedLanguage}) async {
     final uri = Uri.parse('$apiKey/translate/explain');
@@ -44,8 +44,8 @@ class TranslateService {
         }));
 
     if (response.statusCode == 200) {
-      final decodedResponse = jsonDecode(response.body);
-      return decodedResponse['data']['explanation'];
+      final Map<String, dynamic> json = jsonDecode(response.body);
+      return json;
     } else {
       throw Exception('Failed to explain text: ${response.body}');
     }
