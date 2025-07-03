@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:polylingo/screens/translate_screen.dart';
+import 'package:polylingo/services/translate_service.dart';
+import 'package:polylingo/view_model/translate_view_model.dart';
+import 'package:provider/provider.dart';
 
 Future main() async {
   await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (_) => TranslateViewModel(service: TranslateService()),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

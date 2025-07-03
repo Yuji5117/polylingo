@@ -2,20 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:polylingo/services/translate_service.dart';
 
 class TranslateViewModel extends ChangeNotifier {
-  final TranslateService _service;
+  final List<String> languages = [
+    'English',
+    'Spanish',
+    'French',
+    'German',
+    'Japanese',
+    'Chinese',
+    'Korean',
+  ];
 
-  TranslateViewModel({required TranslateService service}) : _service = service;
+  final TranslateService _service;
 
   String _translationResult = '';
   String _explanationResult = '';
-  final String _fromSelectedLanguage = 'Japanese';
-  final String _toSelectedLanguage = 'English';
+  String _fromSelectedLanguage = 'Japanese';
+  String _toSelectedLanguage = 'English';
+
   final TextEditingController _textEditingController = TextEditingController();
 
   String get translationResult => _translationResult;
   String get explanationResult => _explanationResult;
   String get fromSelectedLanguage => _fromSelectedLanguage;
   String get toSelectedLanguage => _toSelectedLanguage;
+  TextEditingController get textEditingController => _textEditingController;
+
+  TranslateViewModel({required TranslateService service}) : _service = service;
+
+  void onFromLanguageChanged(String? newValue) {
+    if (newValue == null) return;
+
+    _fromSelectedLanguage = newValue;
+    notifyListeners();
+  }
+
+  void onToLanguageChanged(String? newValue) {
+    if (newValue == null) return;
+
+    _toSelectedLanguage = newValue;
+    notifyListeners();
+  }
+
+  void swapLanguages() {
+    final temp = fromSelectedLanguage;
+    _fromSelectedLanguage = toSelectedLanguage;
+    _toSelectedLanguage = temp;
+    notifyListeners();
+  }
 
   Future<void> translate() async {
     final inputText = _textEditingController.text;
@@ -23,7 +56,7 @@ class TranslateViewModel extends ChangeNotifier {
     _translationResult = await _service.translateText(
         text: inputText, toSelectedLanguage: toSelectedLanguage);
 
-    ChangeNotifier();
+    notifyListeners();
   }
 
   Future<void> explain() async {
@@ -31,6 +64,6 @@ class TranslateViewModel extends ChangeNotifier {
         translationResult: translationResult,
         fromSelectedLanguage: fromSelectedLanguage);
 
-    ChangeNotifier();
+    notifyListeners();
   }
 }
