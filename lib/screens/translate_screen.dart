@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polylingo/utils/snackbar_util.dart';
 import 'package:provider/provider.dart';
 import 'package:polylingo/view_model/translate_view_model.dart';
 import 'package:polylingo/widgets/explanation_section.dart';
@@ -15,6 +16,12 @@ class TranslationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<TranslateViewModel>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (viewModel.errorMessage != null) {
+        showErrorSnackbar(context, viewModel.errorMessage!);
+      }
+    });
 
     return Scaffold(
       backgroundColor: const Color(0xFFF9F5FF),

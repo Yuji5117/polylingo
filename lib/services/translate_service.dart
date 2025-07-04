@@ -10,21 +10,25 @@ class TranslateService {
       {required String text, required String toSelectedLanguage}) async {
     final uri = Uri.parse('$apiKey/translate');
 
-    final response = await http.post(uri,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'text': text,
-          'to': toSelectedLanguage,
-          'contentType': 'translation',
-        }));
+    try {
+      final response = await http.post(uri,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode({
+            'text': text,
+            'to': toSelectedLanguage,
+            'contentType': 'translation',
+          }));
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> json = jsonDecode(response.body);
-      return json;
-    } else {
-      throw Exception('Failed to translate text: ${response.body}');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> json = jsonDecode(response.body);
+        return json;
+      } else {
+        throw Exception('Failed to translate text: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception('API failed');
     }
   }
 
