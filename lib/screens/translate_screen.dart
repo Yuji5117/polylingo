@@ -43,7 +43,8 @@ class TranslationScreen extends StatelessWidget {
                   swapLanguages: viewModel.swapLanguages),
               const SizedBox(height: 15),
               TranslationInputField(
-                  textEditingController: viewModel.textEditingController),
+                  textEditingController: viewModel.textEditingController,
+                  errorText: viewModel.errorText),
               const SizedBox(height: 20),
               SizedBox(
                   width: double.infinity,

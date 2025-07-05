@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polylingo/exceptions/app_exception.dart';
 import 'package:polylingo/models/explanation_result.dart';
 import 'package:polylingo/models/translation_result.dart';
 import 'package:polylingo/services/translate_service.dart';
@@ -21,6 +22,7 @@ class TranslateViewModel extends ChangeNotifier {
   String _fromSelectedLanguage = 'Japanese';
   String _toSelectedLanguage = 'English';
   Object? error;
+  String? errorText;
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -58,12 +60,16 @@ class TranslateViewModel extends ChangeNotifier {
 
     try {
       error = null;
+      errorText = null;
 
       final json = await _service.translateText(
           text: inputText, toSelectedLanguage: toSelectedLanguage);
 
       final result = TranslationResult.fromJson(json);
       _translationResult = result.translated;
+    } on ValidationException catch (e) {
+      errorText = e.fieldErrors['text'];
+      error = e;
     } catch (e) {
       error = e;
     }
