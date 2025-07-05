@@ -16,3 +16,7 @@ class TimeoutAppException extends AppException {
 class ServerException extends AppException {
   const ServerException() : super(ErrorMessages.server);
 }
+
+class UnknownException extends AppException {
+  const UnknownException() : super(ErrorMessages.unknown);
+}
