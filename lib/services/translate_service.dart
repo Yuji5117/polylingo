@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:polylingo/exceptions/app_exception.dart';
 
 class TranslateService {
   final String? apiKey = dotenv.env['TRANSLATION_API_KEY'];
@@ -24,11 +27,17 @@ class TranslateService {
       if (response.statusCode == 200) {
         final Map<String, dynamic> json = jsonDecode(response.body);
         return json;
-      } else {
+      } else if (response.statusCode == 400) {
         throw Exception('Failed to translate text: ${response.body}');
+      } else {
+        throw const ServerException();
       }
+    } on TimeoutException {
+      throw const TimeoutAppException();
+    } on SocketException {
+      throw const NetworkException();
     } catch (e) {
-      throw Exception('API failed');
+      throw const UnknownException();
     }
   }
 
