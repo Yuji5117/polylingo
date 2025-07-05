@@ -23,3 +23,8 @@ class ServerException extends AppException {
 class UnknownException extends AppException {
   const UnknownException() : super(ErrorMessages.unknown);
 }
+
+class ValidationException extends AppException {
+  final Map<String, String> fieldErrors;
+  const ValidationException(this.fieldErrors) : super(ErrorMessages.validation);
+}

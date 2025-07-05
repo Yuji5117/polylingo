@@ -6,4 +6,6 @@ class ErrorMessages {
       'A server error occurred. Please try again later.';
 
   static const String unknown = 'Something went wrong. Please try again.';
+
+  static const String validation = 'Oops! Looks like something is missing.';
 }
