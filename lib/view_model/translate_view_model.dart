@@ -20,7 +20,7 @@ class TranslateViewModel extends ChangeNotifier {
   String _explanationResult = '';
   String _fromSelectedLanguage = 'Japanese';
   String _toSelectedLanguage = 'English';
-  String? errorMessage;
+  Object? error;
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -57,7 +57,7 @@ class TranslateViewModel extends ChangeNotifier {
     final inputText = _textEditingController.text;
 
     try {
-      errorMessage = null;
+      error = null;
 
       final json = await _service.translateText(
           text: inputText, toSelectedLanguage: toSelectedLanguage);
@@ -65,7 +65,7 @@ class TranslateViewModel extends ChangeNotifier {
       final result = TranslationResult.fromJson(json);
       _translationResult = result.translated;
     } catch (e) {
-      errorMessage = e.toString();
+      error = e;
     }
     notifyListeners();
   }

@@ -18,8 +18,8 @@ class TranslationScreen extends StatelessWidget {
     final viewModel = context.watch<TranslateViewModel>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (viewModel.errorMessage != null) {
-        showErrorSnackbar(context, viewModel.errorMessage!);
+      if (viewModel.error != null) {
+        showErrorSnackbar(context, viewModel.error!);
       }
     });
 
