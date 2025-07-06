@@ -44,7 +44,7 @@ class TranslationScreen extends StatelessWidget {
               const SizedBox(height: 15),
               TranslationInputField(
                   textEditingController: viewModel.textEditingController,
-                  errorText: viewModel.errorText),
+                  errorText: viewModel.translateErrorText),
               const SizedBox(height: 20),
               SizedBox(
                   width: double.infinity,
@@ -66,9 +66,12 @@ class TranslationScreen extends StatelessWidget {
                       viewModel.explain();
                     }),
               const SizedBox(height: 20),
-              if (viewModel.explanationResult.isNotEmpty)
+              if (viewModel.explanationResult.isNotEmpty ||
+                  viewModel.explanationErrorText != null)
                 ExplanationSection(
-                    explanationResult: viewModel.explanationResult),
+                  explanationResult: viewModel.explanationResult,
+                  errorText: viewModel.explanationErrorText,
+                ),
             ],
           ),
         ),

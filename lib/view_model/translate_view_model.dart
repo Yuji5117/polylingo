@@ -22,7 +22,8 @@ class TranslateViewModel extends ChangeNotifier {
   String _fromSelectedLanguage = 'Japanese';
   String _toSelectedLanguage = 'English';
   Object? error;
-  String? errorText;
+  String? translateErrorText;
+  String? explanationErrorText;
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -68,7 +69,7 @@ class TranslateViewModel extends ChangeNotifier {
 
     try {
       error = null;
-      errorText = null;
+      translateErrorText = null;
 
       final json = await _service.translateText(
           text: inputText, toSelectedLanguage: toSelectedLanguage);
@@ -76,7 +77,7 @@ class TranslateViewModel extends ChangeNotifier {
       final result = TranslationResult.fromJson(json);
       _translationResult = result.translated;
     } on ValidationException catch (e) {
-      errorText = e.fieldErrors['text'];
+      translateErrorText = e.fieldErrors['text'];
       error = e;
     } catch (e) {
       error = e;
@@ -85,13 +86,23 @@ class TranslateViewModel extends ChangeNotifier {
   }
 
   Future<void> explain() async {
-    final json = await _service.explainText(
-        translationResult: translationResult,
-        fromSelectedLanguage: fromSelectedLanguage);
+    try {
+      error = null;
+      explanationErrorText = null;
 
-    final result = ExplanationResult.fromJson(json);
+      final json = await _service.explainText(
+          translationResult: translationResult,
+          fromSelectedLanguage: fromSelectedLanguage);
 
-    _explanationResult = result.explanation;
+      final result = ExplanationResult.fromJson(json);
+
+      _explanationResult = result.explanation;
+    } on ValidationException catch (e) {
+      explanationErrorText = e.fieldErrors['text'];
+      error = e;
+    } catch (e) {
+      error = e;
+    }
     notifyListeners();
   }
 }

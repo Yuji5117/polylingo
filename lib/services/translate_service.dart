@@ -53,21 +53,37 @@ class TranslateService {
       required String fromSelectedLanguage}) async {
     final uri = Uri.parse('$apiKey/translate/explain');
 
-    final response = await http.post(uri,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          'text': translationResult,
-          'from': fromSelectedLanguage,
-          'contentType': 'explanation',
-        }));
+    try {
+      final response = await http.post(uri,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode({
+            'text': "",
+            'from': fromSelectedLanguage,
+            'contentType': 'explanation',
+          }));
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> json = jsonDecode(response.body);
-      return json;
-    } else {
-      throw Exception('Failed to explain text: ${response.body}');
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> json = jsonDecode(response.body);
+        return json;
+      } else if (response.statusCode == 400) {
+        final Map<String, dynamic> json = jsonDecode(response.body);
+        final Map<String, String> errors =
+            Map<String, String>.from(json['errors']);
+        throw ValidationException(errors);
+      } else {
+        throw Exception('Failed to explain text: ${response.body}');
+      }
+    } on TimeoutException {
+      throw const TimeoutAppException();
+    } on SocketException {
+      throw const NetworkException();
+    } on AppException {
+      rethrow;
+    } catch (e, stack) {
+      debugPrint('Unexpected error: $e\n$stack');
+      throw const UnknownException();
     }
   }
 }
