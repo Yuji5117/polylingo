@@ -71,6 +71,7 @@ class TranslateViewModel extends ChangeNotifier {
     try {
       error = null;
       translateErrorText = null;
+      _explanationResult = '';
 
       final json = await _service.translateText(
           text: inputText, toSelectedLanguage: toSelectedLanguage);
