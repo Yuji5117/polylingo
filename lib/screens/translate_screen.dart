@@ -56,11 +56,11 @@ class TranslationScreen extends StatelessWidget {
                         : null,
                   )),
               const SizedBox(height: 30),
-              if (viewModel.translationResult.isNotEmpty)
+              if (viewModel.canExplain)
                 TranslationSection(
                     translationResult: viewModel.translationResult),
               const SizedBox(height: 20),
-              if (viewModel.translationResult.isNotEmpty)
+              if (viewModel.canExplain)
                 ExplanationButton(
                   canExplain: viewModel.canExplain,
                   onPressed: viewModel.explain,
