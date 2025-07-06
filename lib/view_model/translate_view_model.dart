@@ -33,7 +33,7 @@ class TranslateViewModel extends ChangeNotifier {
   String get toSelectedLanguage => _toSelectedLanguage;
   TextEditingController get textEditingController => _textEditingController;
 
-  bool get canSubmit => _textEditingController.text.trim().isNotEmpty;
+  bool get canTranslate => _textEditingController.text.trim().isNotEmpty;
   bool get canExplain => translationResult.isNotEmpty;
 
   TranslateViewModel({required TranslateService service}) : _service = service {

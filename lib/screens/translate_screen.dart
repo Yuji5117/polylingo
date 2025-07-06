@@ -51,7 +51,7 @@ class TranslationScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 50,
                   child: TranslationButton(
-                    onPressed: viewModel.canSubmit
+                    onPressed: viewModel.canTranslate
                         ? () => viewModel.translate()
                         : null,
                   )),
