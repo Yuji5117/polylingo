@@ -32,7 +32,15 @@ class TranslateViewModel extends ChangeNotifier {
   String get toSelectedLanguage => _toSelectedLanguage;
   TextEditingController get textEditingController => _textEditingController;
 
-  TranslateViewModel({required TranslateService service}) : _service = service;
+  bool get canSubmit => _textEditingController.text.trim().isNotEmpty;
+
+  TranslateViewModel({required TranslateService service}) : _service = service {
+    _textEditingController.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    notifyListeners();
+  }
 
   void onFromLanguageChanged(String? newValue) {
     if (newValue == null) return;

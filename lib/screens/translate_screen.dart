@@ -49,7 +49,11 @@ class TranslationScreen extends StatelessWidget {
               SizedBox(
                   width: double.infinity,
                   height: 50,
-                  child: TranslationButton(onPressed: viewModel.translate)),
+                  child: TranslationButton(
+                    onPressed: viewModel.canSubmit
+                        ? () => viewModel.translate()
+                        : null,
+                  )),
               const SizedBox(height: 30),
               if (viewModel.translationResult.isNotEmpty)
                 TranslationSection(
