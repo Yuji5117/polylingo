@@ -59,7 +59,7 @@ class TranslateService {
             'Content-Type': 'application/json',
           },
           body: jsonEncode({
-            'text': "",
+            'text': translationResult,
             'from': fromSelectedLanguage,
             'contentType': 'explanation',
           }));

@@ -9,13 +9,19 @@ class TranslationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Colors.blueAccent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),
         ),
       ),
-      icon: const Icon(Icons.language),
-      label: const Text('Translate'),
+      icon: const Icon(
+        Icons.language,
+        color: Colors.white,
+      ),
+      label: const Text(
+        'Translate',
+        style: TextStyle(color: Colors.white),
+      ),
       onPressed: onPressed,
     );
   }

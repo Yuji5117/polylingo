@@ -60,11 +60,20 @@ class TranslationScreen extends StatelessWidget {
                     translationResult: viewModel.translationResult),
               const SizedBox(height: 20),
               if (viewModel.translationResult.isNotEmpty)
-                ActionChip(
-                    label: const Text("Explanation"),
-                    onPressed: () {
-                      viewModel.explain();
-                    }),
+                ElevatedButton.icon(
+                  onPressed:
+                      viewModel.canExplain ? () => viewModel.explain() : null,
+                  icon: const Icon(Icons.info_outline),
+                  label: const Text("Explain"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: viewModel.canExplain
+                        ? Colors.blueAccent
+                        : Colors.grey.shade300,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                  ),
+                ),
               const SizedBox(height: 20),
               if (viewModel.explanationResult.isNotEmpty ||
                   viewModel.explanationErrorText != null)

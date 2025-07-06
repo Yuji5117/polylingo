@@ -34,6 +34,7 @@ class TranslateViewModel extends ChangeNotifier {
   TextEditingController get textEditingController => _textEditingController;
 
   bool get canSubmit => _textEditingController.text.trim().isNotEmpty;
+  bool get canExplain => translationResult.isNotEmpty;
 
   TranslateViewModel({required TranslateService service}) : _service = service {
     _textEditingController.addListener(_onTextChanged);
