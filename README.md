@@ -50,6 +50,24 @@ flutter run
 
 ---
 
+## 📂 Folder Structure
+
+```
+lib/
+├── constants/ # App-wide constants (e.g. error messages)
+├── exceptions/ # Custom exception classes
+├── models/ # Data models (e.g. request/response formats)
+├── screens/ # UI screens and page layout
+├── services/ # API integrations and service logic
+├── utils/ # Utility/helper functions
+├── view_model/ # State management and business logic
+├── widgets/ # Reusable UI components
+├── env.dart # Environment variable loader
+└── main.dart # App entry point
+```
+
+---
+
 ## 💡 Features
 
 - Language selection
