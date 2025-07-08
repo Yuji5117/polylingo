@@ -48,6 +48,8 @@ flutter pub get
 flutter run
 ```
 
+---
+
 ## 💡 Features
 
 - Language selection
@@ -55,3 +57,9 @@ flutter run
 - Display translated results
 - API communication with backend
 - (Coming soon) Save favorites, history
+
+---
+
+## 🔗 Related Projects
+
+- **Backend (Express + TypeScript)** → [polylingo-api](https://github.com/Yuji5117/polylingo-api)
