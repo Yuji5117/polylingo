@@ -1,16 +1,57 @@
-# polylingo
+# Polylingo - Translation App for Real-Life Conversations
 
-A new Flutter project.
+> A multilingual translation app focused on natural, conversational expressions — especially for language learners and overseas travelers.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Overview
 
-A few resources to get you started if this is your first Flutter project:
+Polylingo is a cross-platform translation app built with Flutter and Express (TypeScript), deployed via GCP Cloud Run.  
+Unlike conventional translation apps, Polylingo focuses on **natural, real-life language use**, including **slang, nuance, and casual expressions**.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🎯 Motivation
+
+Many widely used translation tools struggle with casual speech, slang, and subtle nuance, often resulting in translations that sound unnatural or even misleading.
+As a multilingual learner and overseas resident, I repeatedly encountered this problem both in daily life and while supporting others.
+
+Polylingo was born from a desire to:
+
+- Provide **translations that actually work in real conversations**
+- Help **language learners learn natural, spoken language patterns**
+- Make cross-cultural communication more intuitive and accurate
+
+---
+
+## 👤 Target Users
+
+- People living abroad who need real-time, reliable translations
+- Language learners who want to learn **how things are _actually_ said**
+- Travelers who frequently encounter language barriers in casual settings
+
+---
+
+## 🛠️ Tech Stack
+
+- Flutter
+- Provider
+- HTTP
+- dotenv (API key management)
+
+---
+
+## 🚀 How to Run
+
+```bash
+flutter pub get
+flutter run
+```
+
+## 💡 Features
+
+- Language selection
+- Input field with validation
+- Display translated results
+- API communication with backend
+- (Coming soon) Save favorites, history
