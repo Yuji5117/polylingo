@@ -3,22 +3,21 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:polylingo/env.dart';
 import 'package:polylingo/exceptions/app_exception.dart';
 
 class TranslateService {
-  final String? apiKey = dotenv.env['TRANSLATION_API_KEY'];
+  final String apiKey = Env.apiKey;
+  final String translationApiKey = Env.translationApiKey;
 
   Future<Map<String, dynamic>> translateText(
       {required String text, required String toSelectedLanguage}) async {
-    final uri = Uri.parse('$apiKey/translate');
+    final uri = Uri.parse('$translationApiKey/translate');
 
     try {
       final response = await http.post(uri,
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: {'Content-Type': 'application/json', 'x-api-key': apiKey},
           body: jsonEncode({
             'text': text,
             'to': toSelectedLanguage,
@@ -51,7 +50,7 @@ class TranslateService {
   Future<Map<String, dynamic>> explainText(
       {required String translationResult,
       required String fromSelectedLanguage}) async {
-    final uri = Uri.parse('$apiKey/translate/explain');
+    final uri = Uri.parse('$translationApiKey/translate/explain');
 
     try {
       final response = await http.post(uri,
