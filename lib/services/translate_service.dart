@@ -51,12 +51,9 @@ class TranslateService {
       {required String translationResult,
       required String fromSelectedLanguage}) async {
     final uri = Uri.parse('$translationApiKey/translate/explain');
-
     try {
       final response = await http.post(uri,
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: {'Content-Type': 'application/json', 'x-api-key': apiKey},
           body: jsonEncode({
             'text': translationResult,
             'from': fromSelectedLanguage,
